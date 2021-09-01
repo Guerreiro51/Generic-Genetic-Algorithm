@@ -1,0 +1,11 @@
+# Ignore compiled stuff
+genetic_algorithm
+*.o
+
+# Ignore text files
+*.txt
+*.csv
+*.out
+
+# ignore vscode files
+*.json
