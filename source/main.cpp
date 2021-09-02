@@ -5,24 +5,33 @@
  * @date 2021-09-01
  * 
  *
- * TO RUN, JUST USE <MAKE> THEN <MAKE RUN>
+ * TO RUN, JUST USE 'make' THEN 'make run'
+ * you might wanna use 'make run > out.txt'
+ * 
+ * This project is beeing made to study for evolutive systems applied to robotics at University of Sao Paulo (USP)
+ * Learn more at (portuguese): https://gitlab.com/simoesusp/disciplinas/-/tree/master/SSC0713-Sistemas-Evolutivos-Aplicados-a-Robotica
+ * 
  */
 
 #include <iostream>
+#include <GL/glut.h>
 #include "../header/genetic_algorithm.hpp"
+#include "../header/graphical_user_interface.hpp"
 
 #define NUMBER_OF_ITERATIONS 100000
+
 using namespace std;
 
-int main() {
+int main(int argc, char *argv[]) {
+    
+    const bool runTextMode = false;
 
-    vector<Gene> population(POP_SIZE, 0);
-    vector<FitType> fitness(POP_SIZE, 0);
-
-    initialize_population(population, fitness);
-
-    for(size_t i = 0; i < NUMBER_OF_ITERATIONS; i++) {
-        next_generation(population, fitness);
-    }
-
+    Population pop = Population::get_onlyInstance();
+    if(runTextMode)
+        for(size_t i = 0; i < NUMBER_OF_ITERATIONS; i++)
+            pop.next_generation();
+    else
+        run_gui(argc, argv);
+    
+    
 }

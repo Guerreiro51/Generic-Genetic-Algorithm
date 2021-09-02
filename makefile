@@ -34,7 +34,7 @@ CC_FLAGS=-c                    \
 		 -#Wunreachable-code   
 
 # Libraries
-LIBS=-lm 
+LIBS=-lm -lglut -lGL -lGLU
 
 #
 # Compilation and linking
@@ -42,10 +42,10 @@ LIBS=-lm
 all: objFolder $(PROJ_NAME)
  
 $(PROJ_NAME): $(OBJ)
-	$(CC) -o $@ $^
+	$(CC) -o $@ $^ $(LIBS)
  
 ./objects/%.o: ./source/%.cpp ./header/%.hpp
-	$(CC) -o $@ $< $(CC_FLAGS)
+	$(CC) -o $@ $< $(CC_FLAGS) $(LIBS)
  
 ./objects/main.o: ./source/main.cpp $(HPP_SOURCE)
 	$(CC) -o $@ $< $(CC_FLAGS) $(LIBS)
