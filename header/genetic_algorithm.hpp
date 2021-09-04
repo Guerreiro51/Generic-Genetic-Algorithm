@@ -6,7 +6,7 @@
 #include <math.h>
 #include <random>
 
-#define POP_SIZE 100 // The size of the population
+#define POP_SIZE 10 // The size of the population
 #define MUTATION_RATE 0.2f // Starting mutation rate
 
 // Genes are going to be limited to [MIN_X; MAX_X]
@@ -33,6 +33,9 @@ class Population {
         FitType avgFit;
         size_t maxFitIndex;
 
+        FILE* fileMaxFit; 
+        FILE* fileAvgFit;
+        FILE* fileMutationRate;
     public:
         virtual ~Population();
         void initialize_population();
@@ -53,6 +56,9 @@ class Population {
         void set_mutationRate(Gene);
         void double_mutationRate();
         void halve_mutationRate();
+
+        void write_pop_status();
+        void flush_files();
 
         static Population& get_onlyInstance();
 };

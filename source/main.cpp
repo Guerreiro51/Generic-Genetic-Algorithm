@@ -6,7 +6,6 @@
  * 
  *
  * TO RUN, JUST USE 'make' THEN 'make run'
- * you might wanna use 'make run > out.txt'
  * 
  * This project is beeing made to study for evolutive systems applied to robotics at University of Sao Paulo (USP)
  * Learn more at (portuguese): https://gitlab.com/simoesusp/disciplinas/-/tree/master/SSC0713-Sistemas-Evolutivos-Aplicados-a-Robotica
@@ -18,14 +17,14 @@
 #include "../header/genetic_algorithm.hpp"
 #include "../header/graphical_user_interface.hpp"
 
-#define NUMBER_OF_ITERATIONS 100000
+#define NUMBER_OF_ITERATIONS 200
 
 using namespace std;
 
 int main(int argc, char *argv[]) {
     
-    const bool runTextMode = false;
-
+    const bool runTextMode = true;
+    
     Population pop = Population::get_onlyInstance();
     if(runTextMode)
         for(size_t i = 0; i < NUMBER_OF_ITERATIONS; i++)
@@ -33,5 +32,6 @@ int main(int argc, char *argv[]) {
     else
         run_gui(argc, argv);
     
-    
+    pop.flush_files();
+    plot_stuff();
 }

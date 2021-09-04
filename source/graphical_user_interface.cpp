@@ -101,6 +101,7 @@ void run_gui(int& argc, char* argv[]) {
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
     glutInitWindowSize(glutGet(GLUT_SCREEN_WIDTH), glutGet(GLUT_SCREEN_HEIGHT));
+    glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_GLUTMAINLOOP_RETURNS); 
     glutCreateWindow("Evolutive Systems - Alice | Warrior");
 
     /* Sets the DisplayFunc and the KeyboardFunc */
@@ -110,5 +111,21 @@ void run_gui(int& argc, char* argv[]) {
     /* Starts the drawing loop */
     gluOrtho2D(0, 1000, 0, 1000);
     glutMainLoop();
+}
+
+void plot_stuff() {
+    
+    FILE* gnuplot = popen("gnuplot", "w");
+    fprintf(gnuplot, "set term pngcairo\nset output 'plots/fitness.png'\n");
+    fprintf(gnuplot, "set title 'Fitness plot'\nset key outside\nset xlabel 'Generation'\nset ylabel 'Fitness'\n");
+    fprintf(gnuplot, "plot 'data/maxFit.txt' title 'MaxFit' with lines, 'data/avgFit.txt' title 'AvgFit' with lines");
+    fclose(gnuplot);
+
+    FILE* gnuplot2 = popen("gnuplot", "w");
+    fprintf(gnuplot2, "set term pngcairo\nset output 'plots/mutationRate.png'\n");
+    fprintf(gnuplot2, "set title 'Mutation Rate'\nset key left top\nset xlabel 'Generation'\nset ylabel 'Mutation Rate'\nset logscale y\n");
+    fprintf(gnuplot2, "plot 'data/mutationRate.txt' title 'Mutation Rate' with lines");
+    fclose(gnuplot2);
+    
 }
 

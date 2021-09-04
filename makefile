@@ -52,6 +52,8 @@ $(PROJ_NAME): $(OBJ)
 
 objFolder:
 	@ mkdir -p objects
+	@ mkdir -p data
+	@ mkdir -p plots
 
 .PHONY: run
 
@@ -66,7 +68,7 @@ debug:
 .PHONY: clean
 
 clean:
-	@ rm -rf ./objects/*.o $(PROJ_NAME) *~
-	@ rmdir objects
+	@ rm -rf ./objects/*.o ./plots/*.png ./data/*.txt $(PROJ_NAME) *~
+	@ rmdir objects plots data
 
 

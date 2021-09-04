@@ -7,10 +7,11 @@
  * sudo apt-get install binutils-gold
  */
 
-#include <GL/glut.h>
+#include <GL/freeglut.h>
 
 void render(void);
 void keyboard(unsigned char key, int x, int y);
 void run_gui(int& argc, char* argv[]);
+void plot_stuff();
 
 #endif /* GRAPHICAL_USER_INTERFACE_HPP */

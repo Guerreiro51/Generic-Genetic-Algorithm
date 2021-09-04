@@ -1,4 +1,5 @@
 #include "../header/genetic_algorithm.hpp"
+#include <sstream>
 
 using namespace std;
 
@@ -17,6 +18,15 @@ Population::Population() {
     genes = vector<Gene>(popSize, 0.0f);
     fitness = vector<FitType>(popSize, 0.0f);
 
+    fileMaxFit = fopen("data/maxFit.txt", "w");
+    fileAvgFit = fopen("data/avgFit.txt", "w");
+    fileMutationRate = fopen("data/mutationRate.txt", "w");
+
+    if(fileMaxFit == NULL || fileAvgFit == NULL || fileMutationRate == NULL) {
+        cout << "Error: unable to open files!\n";
+        exit(1);
+    }
+
     initialize_population();
 }
 Population::~Population() {}
@@ -34,6 +44,7 @@ void Population::initialize_population() {
         genes[i] = dist(mt); // Generate a number from [MIN_INIT, MAX_INIT)
     }
     evaluate_population();
+    write_pop_status();
 }
 
 /**
@@ -56,10 +67,8 @@ void Population::evaluate_population() {
 	    fitness[i] = evaluate_gene(genes[i]);
         avgFit += fitness[i];
         maxFitIndex = (fitness[maxFitIndex] > fitness[i]) ? maxFitIndex : i;
-		//cout << "\tFitness " << i+1 << " (" << genes[i] << ")= " << fitness[i] << '\n';
     }
     avgFit /= (FitType) popSize*1.0f;
-    cout << genNumber <<":\t\tMaxFit(" << genes[maxFitIndex] << ") = " << fitness[maxFitIndex] << "\t\tAvgFit = " << avgFit << '\n';
 }
 
 /**
@@ -111,6 +120,7 @@ void Population::next_generation() {
     genNumber++;
     elitism();
     evaluate_population();
+    write_pop_status();
 }
 
 /* A lot of getters */
@@ -132,6 +142,29 @@ void Population::set_mutationRate(Gene newMutationRate) {
 void Population::double_mutationRate() {set_mutationRate(mutationRate * 2);}
 void Population::halve_mutationRate() {set_mutationRate(mutationRate / 2);}
 
+void Population::write_pop_status() {
+    stringstream ss;
+    ss << get_genNumber() << ' ' << get_maxFit() << '\n';
+    fprintf(fileMaxFit, "%s", ss.str().c_str());
+
+    ss.str("");
+    ss << get_genNumber() << ' ' << get_avgFit() << '\n';
+    fprintf(fileAvgFit, "%s", ss.str().c_str());
+
+    ss.str("");
+    ss << get_genNumber() << ' ' << get_mutationRate() << '\n';
+    fprintf(fileMutationRate, "%s", ss.str().c_str());
+
+    //fflush(fileMaxFit);
+    //fflush(fileAvgFit);
+    //fflush(fileMutationRate);
+}
+
+void Population::flush_files() {
+    fflush(fileMaxFit);
+    fflush(fileAvgFit);
+    fflush(fileMutationRate);
+}
 /**
  * @brief Implementation of a singleton class, i.e., a class that has only one instance.
  * 
