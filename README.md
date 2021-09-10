@@ -14,14 +14,14 @@ The program can also render some useful plots showing the population progress th
 
 First, you're gonna need to install GLUT. In Ubuntu, you just need to run:
 
-```
+```bash
 sudo apt-get install freeglut3 freeglut3-dev
 sudo apt-get install binutils-gold
 ```
 
 After this, you can compile and run it with:
 
-```
+```bash
 make
 make run
 ```
@@ -30,13 +30,13 @@ make run
 
 You can enable/disable the GUI in source/main.cpp by altering the runTextMode variable.
 
-```
+```cpp
 const bool runTextMode = false;
 ```
 
 You can also change some general settings about the population in header/genetic_algorithm.hpp
 
-```
+```cpp
 #define POP_SIZE 10 // The size of the population
 #define MUTATION_RATE 0.2f // Starting mutation rate
 
@@ -51,7 +51,7 @@ You can also change some general settings about the population in header/genetic
 
 Lastly, you can create your own function to be maximized by the algorithm by changing the Population::evaluate_gene() function in source/genetic_algorithm.cpp. The default function is the following:
 
-```
+```cpp
 FitType Population::evaluate_gene(Gene x) {
     return (FitType) ((2.0f*cos(0.039f*x) + 5.0f*sin(0.05f*x) + 0.5f*cos(0.01f*x) + 10.0f*sin(0.07f*x) + 5.0f*sin(0.1f*x) + 5.0f*sin(0.035f*x))*10.0f+500.0f);
 }
