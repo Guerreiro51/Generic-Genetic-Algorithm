@@ -60,6 +60,12 @@ objFolder:
 run:
 	./$(PROJ_NAME)
 
+run_nogui:
+	./$(PROJ_NAME) nogui
+
+run_gui:
+	./$(PROJ_NAME) gui
+
 .PHONY: debug
 
 debug:

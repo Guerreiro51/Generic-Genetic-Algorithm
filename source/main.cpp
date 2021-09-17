@@ -16,6 +16,7 @@
 #include <GL/glut.h>
 #include "../header/genetic_algorithm.hpp"
 #include "../header/graphical_user_interface.hpp"
+#include <string>
 
 #define NUMBER_OF_ITERATIONS 200
 
@@ -23,10 +24,15 @@ using namespace std;
 
 int main(int argc, char *argv[]) {
     
-    const bool runTextMode = true;
+    bool noGUI = false;
+    if(argc >= 2) {
+        string arg(argv[1]);
+        noGUI = (arg.find("nogui") != string::npos) ? true : false;
+    }
+        
     
     Population pop = Population::get_onlyInstance();
-    if(runTextMode)
+    if(noGUI)
         for(size_t i = 0; i < NUMBER_OF_ITERATIONS; i++)
             pop.next_generation();
     else
