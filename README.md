@@ -12,11 +12,12 @@ The program can also render some useful plots showing the population progress th
 
 # How to run it
 
-First, you're gonna need to install GLUT. In Ubuntu, you just need to run:
+First, you're gonna need to install GLUT and GNUPLOT. In Ubuntu, you just need to run:
 
 ```bash
 sudo apt-get install freeglut3 freeglut3-dev
 sudo apt-get install binutils-gold
+sudo apt-get install gnuplot
 ```
 
 After this, you can compile and run it with:
@@ -56,3 +57,9 @@ FitType Population::evaluate_gene(Gene x) {
     return (FitType) ((2.0f*cos(0.039f*x) + 5.0f*sin(0.05f*x) + 0.5f*cos(0.01f*x) + 10.0f*sin(0.07f*x) + 5.0f*sin(0.1f*x) + 5.0f*sin(0.035f*x))*10.0f+500.0f);
 }
 ```
+
+## Running in windows with WSL 2
+
+I'd recommend using VcXsrv, you're going to need to create a firewall inbound rule allowing TCP communication through port 6000 (on the windows side) and fix some X11 forwarding issues (on the WSL 2 side). There's a nice tutorial ![here](https://stackoverflow.com/questions/61110603/how-to-set-up-working-x11-forwarding-on-wsl2).
+
+
