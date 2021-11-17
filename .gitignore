@@ -1,14 +1,14 @@
-# Ignore compiled stuff
-genetic_algorithm
-*.o
+# Ignore everything (especially on the build folder)
+*
+!*/
+/build
 
-# Ignore text files
-*.txt
-*.csv
-*.out
+# but allow c++ code
+!*.cpp
+!*.h
+!*.hpp
+!CMakeLists.txt
 
-# Ignore generated plots
-*.png
-
-# ignore vscode files
-*.json
+!.gitignore
+!README.md
+!LICENSE

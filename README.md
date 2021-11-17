@@ -15,16 +15,16 @@ The program can also render some useful plots showing the population progress th
 First, you're gonna need to install GLUT and GNUPLOT. In Ubuntu, you just need to run:
 
 ```bash
-sudo apt-get install freeglut3 freeglut3-dev
-sudo apt-get install binutils-gold
-sudo apt-get install gnuplot
+sudo apt-get install freeglut3 freeglut3-dev binutils-gold gnuplot -y
 ```
 
 After this, you can compile and run it with:
 
 ```bash
+mkdir build && cd build && mkdir data plots
+cmake ..
 make
-make run
+./Genetic_Algorithm <gui|nogui>
 ```
 
 ## Settings
@@ -38,28 +38,21 @@ const bool runTextMode = false;
 You can also change some general settings about the population in header/genetic_algorithm.hpp
 
 ```cpp
-#define POP_SIZE 10 // The size of the population
-#define MUTATION_RATE 0.2f // Starting mutation rate
-
-// Genes are going to be limited to [MIN_X; MAX_X]
-#define MIN_X 0.0f
-#define MAX_X 1e3 
-
-// Genes are going to start from [MIN_INIT; MAX_INIT]
-#define MIN_INIT 0.0f
-#define MAX_INIT 1e3 
+constexpr size_t POP_SIZE = 10;        // The size of the population
+constexpr float MUTATION_RATE = 0.2f;  // Starting mutation rate
 ```
 
-Lastly, you can create your own function to be maximized by the algorithm by changing the Population::evaluate_gene() function in source/genetic_algorithm.cpp. The default function is the following:
+Lastly, you can create your own function to be maximized by the algorithm by changing the Population::EvaluateGene() function in source/genetic_algorithm.cpp. The default function is the following:
 
 ```cpp
-FitType Population::evaluate_gene(Gene x) {
-    return (FitType) ((2.0f*cos(0.039f*x) + 5.0f*sin(0.05f*x) + 0.5f*cos(0.01f*x) + 10.0f*sin(0.07f*x) + 5.0f*sin(0.1f*x) + 5.0f*sin(0.035f*x))*10.0f+500.0f);
+// benchmark function
+FitType Population::EvaluateGene(Gene x) {
+    return ((2.0f * cos(0.039f * x) + 5.0f * sin(0.05f * x) + 0.5f * cos(0.01f * x) + 10.0f * sin(0.07f * x) + 5.0f * sin(0.1f * x) + 5.0f * sin(0.035f * x)) * 10.0f + 500.0f);
 }
 ```
 
-## Running in windows with WSL 2
+## Running in windows 10 with WSL 2
 
-I'd recommend using VcXsrv, you're going to need to create a firewall inbound rule allowing TCP communication through port 6000 (on the windows side) and fix some X11 forwarding issues (on the WSL 2 side). There's a nice tutorial ![here](https://stackoverflow.com/questions/61110603/how-to-set-up-working-x11-forwarding-on-wsl2).
+I'd recommend using VcXsrv, you're going to need to create a firewall inbound rule allowing TCP communication through port 6000 (on the windows side) and fix some X11 forwarding issues (on the WSL 2 side). There's a nice tutorial [here](https://stackoverflow.com/questions/61110603/how-to-set-up-working-x11-forwarding-on-wsl2).
 
 
